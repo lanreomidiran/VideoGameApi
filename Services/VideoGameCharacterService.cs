@@ -8,7 +8,8 @@ namespace VideoGameApi.Services
         {
             new Character { Id = 1, Name = "Mario", Game = "Super Mario Bros.", Role = "Hero" },
             new Character { Id = 2, Name = "Link", Game = "The Legend of Zelda", Role = "Hero" },
-            new Character { Id = 3, Name = "Bowser", Game = "Super Mario Bros", Role = "Villain" }
+            new Character { Id = 3, Name = "Bowser", Game = "Super Mario Bros", Role = "Villain" },
+            new Character { Id = 4, Name = "Zelda", Game = "The Legend of Zelda", Role = "Princess" },
         };
         public Task<Character> AddCharacterAsync(Character character)
         {
@@ -23,9 +24,10 @@ namespace VideoGameApi.Services
         public async Task<List<Character>> GetAllCharactersAsync()
          => await Task.FromResult(characters);
 
-        public Task<Character> GetCharacterByIdAsync(int id)
+        public async Task<Character?> GetCharacterByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = characters.FirstOrDefault(c => c.Id == id);
+            return await Task.FromResult(result);
         }
 
         public Task<bool> UpdateCharacterAsync(int id, Character character)
