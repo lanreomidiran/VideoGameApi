@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 using VideoGameApi.Data;
 using VideoGameApi.Services;
 
@@ -20,11 +19,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Map the native OpenAPI endpoint (usually /openapi/v1.json)
     app.MapOpenApi();
-    app.MapScalarApiReference();
-}
 
-app.UseHttpsRedirection();
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
