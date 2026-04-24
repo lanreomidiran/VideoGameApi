@@ -18,11 +18,26 @@ namespace VideoGameApi.Services
             };
             context.Characters.Add(newCharacter);
             await context.SaveChangesAsync();
+
+            return new CharacterResponse
+            {
+                Id = newCharacter.Id,
+                Name = newCharacter.Name,
+                Game = newCharacter.Game,
+                Role = newCharacter.Role,
+            };
         }
 
-        public Task<bool> DeleteCharacterAsync(int id)
+        public async Task<bool> DeleteCharacterAsync(int id)
         {
-            throw new NotImplementedException();
+            var characterToDelete = await context.Characters.FindAsync(id);
+            if (characterToDelete is null)
+                return false;
+
+            context.Characters.Remove(characterToDelete);
+            await context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<List<CharacterResponse>> GetAllCharactersAsync()
@@ -48,9 +63,20 @@ namespace VideoGameApi.Services
             return result;
         }
 
-        public Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
+        public async Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
-            throw new NotImplementedException();
+            var existingCharacter = await context.Characters.FindAsync(id);
+            if (existingCharacter is null) 
+            return false;
+
+            existingCharacter.Name = character.Name;
+            existingCharacter.Game = character.Game;
+            existingCharacter.Role = character.Role;
+
+            await context.SaveChangesAsync();
+
+            return true;
+
         }
 
         Task<CharacterResponse> IVideoGameCharacterService.AddCharacterAsync(Character character)
