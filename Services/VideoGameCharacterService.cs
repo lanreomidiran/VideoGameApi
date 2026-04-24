@@ -8,9 +8,16 @@ namespace VideoGameApi.Services
 {
     public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
     {
-        public Task<CharacterResponse> AddCharacterAsync(CreateCharacterRequest character)
+        public async Task<CharacterResponse> AddCharacterAsync(CreateCharacterRequest character)
         {
-            throw new NotImplementedException();
+            var newCharacter = new Character
+            {
+                Name = character.Name,
+                Game = character.Game,
+                Role = character.Role,
+            };
+            context.Characters.Add(newCharacter);
+            await context.SaveChangesAsync();
         }
 
         public Task<bool> DeleteCharacterAsync(int id)
