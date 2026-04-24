@@ -8,7 +8,7 @@ namespace VideoGameApi.Services
 {
     public class VideoGameCharacterService(AppDbContext context) : IVideoGameCharacterService
     {
-        public Task<CharacterResponse> AddCharacterAsync(Character character)
+        public Task<CharacterResponse> AddCharacterAsync(CreateCharacterRequest character)
         {
             throw new NotImplementedException();
         }
@@ -21,6 +21,7 @@ namespace VideoGameApi.Services
         public async Task<List<CharacterResponse>> GetAllCharactersAsync()
          => await context.Characters.Select(c=> new CharacterResponse
          {
+             Id = c.Id,
              Name = c.Name,
              Game = c.Game,
              Role = c.Role,
@@ -40,7 +41,7 @@ namespace VideoGameApi.Services
             return result;
         }
 
-        public Task<bool> UpdateCharacterAsync(int id, Character character)
+        public Task<bool> UpdateCharacterAsync(int id, UpdateCharacterRequest character)
         {
             throw new NotImplementedException();
         }
