@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VideoGameApi.Dtos;
 using VideoGameApi.Models;
 using VideoGameApi.Services;
 
@@ -11,11 +12,11 @@ namespace VideoGameApi.Controllers
     {
         
         [HttpGet]
-        public async Task<ActionResult<List<Character>>> GetCharacters()
+        public async Task<ActionResult<List<CharacterResponse>>> GetCharacters()
             => Ok(await service.GetAllCharactersAsync());
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterResponse>> GetCharacter(int id)
         {
             var character = await service.GetCharacterByIdAsync(id);
             return character is null ? NotFound("Character with the given Id was not found.") : Ok(character);
